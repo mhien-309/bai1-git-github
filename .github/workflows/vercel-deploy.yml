@@ -1,26 +1,26 @@
-name: Deploy to Vercel
+name: Deploy to Vercel # Tên của workflow này
 
-on:
-  push:
+on: # Khi nào workflow này được kích hoạt
+  push: # Khi có sự kiện push
     branches:
-      - main
+      - main # Chỉ áp dụng cho nhánh main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+jobs: # Các job sẽ chạy trong workflow
+  deploy: # Tên job
+    runs-on: ubuntu-latest # Chạy trên máy ảo Ubuntu mới nhất
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    steps: # Các bước thực hiện trong job
+      - name: Checkout code # Bước 1: Lấy mã nguồn về runner
+        uses: actions/checkout@v3 # Sử dụng action checkout
 
-      - name: Install Vercel CLI
-        run: npm install -g vercel
+      - name: Install Vercel CLI # Bước 2: Cài đặt Vercel CLI
+        run: npm install -g vercel # Cài đặt Vercel toàn cục bằng npm
 
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Pull Vercel Environment Information # Bước 3: Lấy thông tin môi trường từ Vercel
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }} # Sử dụng token bảo mật
 
-      - name: Build Project
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project # Bước 4: Build project với Vercel CLI
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} # Build ở chế độ production
 
-      - name: Deploy Project
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project # Bước 5: Deploy project đã build lên Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }} # Deploy với token bảo mật=
